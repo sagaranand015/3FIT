@@ -1,3 +1,5 @@
+import { utils } from "web3";
+
 export const GYM_STORE_CONTRACT = "0xED012b3C82E793a982Df0131ae8a5Ecea4448c5c";
 export const GYM_SUBSCRIPTION_CONTRACT = "0x57E7994c36262036899504e61cECc4Af06715F52";
 

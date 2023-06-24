@@ -25,7 +25,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
 import GymStore from '../../abis/GymStore.json';
-import { GYM_STORE_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from 'src/pages/utils'
+import { GYM_STORE_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from 'src/utils/utils'
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'

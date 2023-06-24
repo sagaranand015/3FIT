@@ -22,7 +22,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 
 import GymSubscription from '../../../abis/GymSubscription.json';
-import { GYM_SUBSCRIPTION_CONTRACT, GetDateInCurrentTimezone, isSubscriptionValid, shortenAddress } from 'src/pages/utils'
+import { GYM_SUBSCRIPTION_CONTRACT, GetDateInCurrentTimezone, isSubscriptionValid, shortenAddress } from 'src/utils/utils'
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'

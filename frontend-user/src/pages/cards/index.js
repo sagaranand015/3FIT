@@ -11,7 +11,6 @@ import CardTwitter from 'src/views/cards/CardTwitter'
 import CardFacebook from 'src/views/cards/CardFacebook'
 import CardLinkedIn from 'src/views/cards/CardLinkedIn'
 import CardAppleWatch from 'src/views/cards/CardAppleWatch'
-import CardMembership from 'src/views/cards/CardMembership'
 import CardInfluencer from 'src/views/cards/CardInfluencer'
 import CardNavigation from 'src/views/cards/CardNavigation'
 import CardWithCollapse from 'src/views/cards/CardWithCollapse'
@@ -42,9 +41,6 @@ const CardBasic = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <CardAppleWatch />
-      </Grid>
-      <Grid item xs={12} md={8}>
-        <CardMembership />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <CardInfluencer />

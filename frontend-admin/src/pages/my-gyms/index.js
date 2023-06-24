@@ -25,7 +25,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { GYM_STORE_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from '../utils';
+import { GYM_STORE_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from '../../utils/utils';
 import { styled } from '@mui/material/styles'
 import Link from 'next/link';
 import { LoadingButton } from '@mui/lab';

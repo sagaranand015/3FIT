@@ -25,7 +25,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
 import GymSubscription from '../../abis/GymSubscription.json';
-import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, GetCidFromIpfsLink, GetDateInCurrentTimezone, GetIpfsFileUrl } from 'src/pages/utils'
+import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, GetCidFromIpfsLink, GetDateInCurrentTimezone, GetIpfsFileUrl } from 'src/utils/utils'
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'

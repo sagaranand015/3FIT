@@ -6,21 +6,7 @@ import Typography from '@mui/material/Typography'
 // import GymSubscription from '../../abis/GymSubscription.json';
 
 // ** Demo Components Imports
-import CardUser from 'src/views/cards/CardUser'
 import CardImgTop from 'src/views/cards/CardImgTop'
-import CardMobile from 'src/views/cards/CardMobile'
-import CardSupport from 'src/views/cards/CardSupport'
-import CardTwitter from 'src/views/cards/CardTwitter'
-import CardFacebook from 'src/views/cards/CardFacebook'
-import CardLinkedIn from 'src/views/cards/CardLinkedIn'
-import CardAppleWatch from 'src/views/cards/CardAppleWatch'
-import CardMembership from 'src/views/cards/CardMembership'
-import CardInfluencer from 'src/views/cards/CardInfluencer'
-import CardNavigation from 'src/views/cards/CardNavigation'
-import CardWithCollapse from 'src/views/cards/CardWithCollapse'
-import CardVerticalRatings from 'src/views/cards/CardVerticalRatings'
-import CardNavigationCenter from 'src/views/cards/CardNavigationCenter'
-import CardHorizontalRatings from 'src/views/cards/CardHorizontalRatings'
 import { useAuth } from 'src/configs/authProvider'
 import HelpNotificationCard from 'src/views/cards/HelpNotificationCard'
 import CardImgTop2 from 'src/views/cards/CardImgTop2'
@@ -33,7 +19,7 @@ import { wcProvider } from 'src/configs/walletConnectProvider'
 import GymSubscription from '../../abis/GymSubscription.json';
 
 import Web3 from "web3";
-import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT } from '../utils';
+import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT } from '../../utils/utils';
 
 const KioskEntry = () => {
   const { currentAccount, setCurrentAccount, disconnectAccount, adminMode } = useAuth()
