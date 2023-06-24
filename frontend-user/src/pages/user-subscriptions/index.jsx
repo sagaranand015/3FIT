@@ -25,7 +25,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
 import GymSubscription from '../../abis/GymSubscription.json';
-import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from 'src/pages/utils'
+import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, GetCidFromIpfsLink, GetDateInCurrentTimezone, GetIpfsFileUrl } from 'src/pages/utils'
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'
@@ -82,7 +82,7 @@ const NearByGyms = () => {
           name: subRes[r]['memberName'].toString(),
           image: GetIpfsFileUrl(GetCidFromIpfsLink(subRes[r]['image'].toString())),
           owner: subRes[r]['owner'].toString(),
-          invalidAfter: subRes[r]['invalidAfter'],
+          invalidAfter: parseInt(subRes[r]['invalidAfter']),
         })
       }
       setUserSubs(subs);
@@ -135,12 +135,13 @@ const NearByGyms = () => {
                   }}
                 >
                   <CardContent>
-                    <Typography variant='h3' sx={{ marginBottom: 2 }}>
+                    <Typography variant='h4' sx={{ marginBottom: 2 }}>
                       {row.name}
                     </Typography>
-                    {/* <Typography variant='h5' sx={{ marginBottom: 2 }}>
-                      Store Number: {row.storeId}
-                    </Typography> */}
+                    Valid Till:
+                    <Typography variant='h5' sx={{ marginBottom: 2 }}>
+                      {GetDateInCurrentTimezone(row.invalidAfter)}
+                    </Typography>
                   </CardContent>
                   <CardActions className='card-action-dense'>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>

@@ -17,12 +17,15 @@ import ShareVariant from 'mdi-material-ui/ShareVariant'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
+import GymSubscription from '../../../abis/GymSubscription.json';
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/material/styles'
 import { Button, CardActions, CardContent } from '@mui/material'
 import MembershipTypesJson from '../../../data/MembershipTypes.json';
+import { GYM_SUBSCRIPTION_CONTRACT } from 'src/pages/utils'
+import Web3 from 'web3'
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -56,6 +59,7 @@ const MembershipTypes = () => {
 
   const [membershipTypes, setMembershipTypes] = useState(null);
   const [stId, setStId] = useState(null);
+  const [txInProgress, setTxInProgress] = useState(false);
 
   function GetAllMembershipTypes(sid) {
     for (var i = 0; i < MembershipTypesJson.length; i++) {
@@ -65,8 +69,37 @@ const MembershipTypes = () => {
     }
   }
 
-  async function PurchaseMembership() {
-    alert(" ======= purchase to be made here via Minting Subscription NFT...");
+  async function PurchaseMembership(mbShip) {
+    if (currentAccount && stId) {
+      //  Create Web3 instance
+      const web3 = new Web3(providerClient);
+      const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
+      console.log("========= mlShip: ", mbShip);
+      const subRes = await contract.methods.createSubscription(stId, "Demo User Subscription NFT for Gym", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", currentAccount, mbShip.invalidAfter).send({ from: currentAccount });
+      setTxInProgress(true);
+      console.log("========= response of purchase: ", subRes);
+      alert("Transaction successful. Your subscription NFT should now be available on the explorer!");
+      setTxInProgress(false);
+      // let subs = []
+      // if (subRes.length == 0) {
+      //   setUserSubs([]);
+      // }
+      // for (const r in subRes) {
+      //   console.log("======= response is: ", subRes[r])
+      //   subs.push({
+      //     tokenId: subRes[r]['tokenId'],
+      //     storeId: subRes[r]['storeId'],
+      //     name: subRes[r]['memberName'].toString(),
+      //     image: GetIpfsFileUrl(GetCidFromIpfsLink(subRes[r]['image'].toString())),
+      //     owner: subRes[r]['owner'].toString(),
+      //     invalidAfter: subRes[r]['invalidAfter'],
+      //   })
+      // }
+      // setUserSubs(subs);
+      // console.log(" ========== contract response in state var: ", userSubs, subs);
+    } else {
+      console.log("User account or StoreId not set while purchase subscription!");
+    }
 
   }
 
@@ -79,7 +112,7 @@ const MembershipTypes = () => {
     } else {
       setAccountConnected(false)
     }
-  }, [currentAccount])
+  }, [currentAccount, txInProgress])
 
   return (
     <Grid container spacing={6}>
@@ -110,19 +143,31 @@ const MembershipTypes = () => {
                   }}
                 >
                   <CardContent>
-                    <Typography variant='h3' sx={{ marginBottom: 2 }}>
+                    <Typography variant='h4' sx={{ marginBottom: 2 }}>
                       {row.name}
                     </Typography>
-                    <Typography variant='h5' sx={{ marginBottom: 2 }}>
-                      Description: {row.description}
+                    Description:
+                    <Typography variant='h6' sx={{ marginBottom: 2 }}>
+                      {row.description}
+                    </Typography>
+                    Price:
+                    <Typography variant='h6' sx={{ marginBottom: 2 }}>
+                      {row.price}
                     </Typography>
                   </CardContent>
                   <CardActions className='card-action-dense'>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                      <Button onClick={PurchaseMembership}>
-                        <CartPlus fontSize='small' sx={{ marginRight: 2 }} />
-                        Purchase Membership
-                      </Button>
+                      {txInProgress ? (
+                        <>
+                          <LoadingButton loading={true}>Transaction in progress, please wait for it to finish!</LoadingButton>
+                        </>
+                      ) : (
+                        <><Button onClick={() => { PurchaseMembership(row) }}>
+                          <CartPlus fontSize='small' sx={{ marginRight: 2 }} />
+                          Purchase Membership
+                        </Button></>
+                      )}
+
                       <IconButton
                         id='long-button'
                         aria-label='share'

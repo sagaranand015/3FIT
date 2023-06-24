@@ -9,11 +9,11 @@ const gymSub = await gs.attach("0x57E7994c36262036899504e61cECc4Af06715F52");
 
 #### GymSubscription Contract function calls
 ```
-const subCreatedRes = await gymSub.createSubscription(1, 'Anytime Fitness - Sagar Anand 1 Year NFT Subscription', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', '0xDeC6Df558e198A7745AcBe881f61B3506D59CFC4', 1719082288);
+const subCreatedRes = await gymSub.createSubscription(1, 'Anytime Fitness - Sagar Anand 1 Year NFT Subscription', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', '0xDeC6Df558e198A7745AcBe881f61B3506D59CFC4', 1719082288);
 
-subCreatedRes = await gymSub.createSubscription(2, 'Zero Gravity - Sagar Anand 1 Month NFT Subscription', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', '0xDeC6Df558e198A7745AcBe881f61B3506D59CFC4', 1690095132);
+subCreatedRes = await gymSub.createSubscription(2, 'Zero Gravity - Sagar Anand 1 Month NFT Subscription', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', '0xDeC6Df558e198A7745AcBe881f61B3506D59CFC4', 1690095132);
 
-subCreatedRes = await gymSub.createSubscription(3, 'Divine Fitness - Sagar Anand 1 Month NFT Subscription', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', 'ipfs://bafybeihbmt4n5gr6qifjhu6haxrx433rzmvpw4smvywt2xf4nn3gqhvckq', '0x0a055Ed28e6acc2f2377Ed0aE3bE06D24885d449', 1690095132);
+subCreatedRes = await gymSub.createSubscription(3, 'Divine Fitness - Sagar Anand 1 Month NFT Subscription', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', '0x0a055Ed28e6acc2f2377Ed0aE3bE06D24885d449', 1690095132);
 ```
 
 2. ```
