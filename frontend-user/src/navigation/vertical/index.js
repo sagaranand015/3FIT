@@ -31,7 +31,7 @@ const navigation = () => {
     {
       title: 'My Subscriptions',
       icon: AlertCircleOutline,
-      path: '/my-subscriptions',
+      path: '/user-subscriptions',
     },
     {
       sectionTitle: 'Help & Support'
