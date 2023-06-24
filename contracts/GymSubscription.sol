@@ -60,9 +60,13 @@ contract GymSubscription is ERC721URIStorage {
     function GetSubscriptionData(
         uint256 _storeId
     ) public view returns (storeSubscription[] memory) {
-        storeSubscription[] memory subs = new storeSubscription[](
-            subscriptions.length
-        );
+        uint256 k = 0;
+        for (uint256 i = 0; i < subscriptions.length; i++) {
+            if (subscriptions[i].storeId == _storeId) {
+                k = k + 1;
+            }
+        }
+        storeSubscription[] memory subs = new storeSubscription[](k);
         uint256 j = 0;
         for (uint256 i = 0; i < subscriptions.length; i++) {
             if (subscriptions[i].storeId == _storeId) {

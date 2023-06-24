@@ -1,10 +1,10 @@
 ### Gym Contract calls
 
-GymStore SC deployed to `0xf8228E24F6c6F53cB22af72192114bB58022918B`
+GymStore SC deployed to `0xED012b3C82E793a982Df0131ae8a5Ecea4448c5c`
 
 #### Get GymStore Contract
 const g = await ethers.getContractFactory("GymStore");
-const gymStore = await g.attach("0xf8228E24F6c6F53cB22af72192114bB58022918B");
+const gymStore = await g.attach("0xED012b3C82E793a982Df0131ae8a5Ecea4448c5c");
 
 
 #### GymStore Contract function calls

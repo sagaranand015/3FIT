@@ -31,7 +31,12 @@ function AuthProvider(props) {
 
     const disconnectWalletHandler = async () => {
         if (providerClient) {
-            await providerClient.disconnect();
+            // await providerClient.disconnect();
+            if (providerClient.connected) {
+                console.log("======= isConnected?")
+                // await providerClient.connector.killSession();
+                await providerClient.disconnect();
+            }
             setCurrentAccount(null);
         } else {
             alert("Could not initialize WalletConnect properly, please refresh the page!");

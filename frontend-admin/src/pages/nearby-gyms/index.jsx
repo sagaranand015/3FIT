@@ -24,8 +24,8 @@ import ShareVariant from 'mdi-material-ui/ShareVariant'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
-import GymSubscription from '../../abis/GymSubscription.json';
-import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from 'src/pages/utils'
+import GymStore from '../../abis/GymStore.json';
+import { GYM_STORE_CONTRACT, GetCidFromIpfsLink, GetIpfsFileUrl } from 'src/pages/utils'
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'
@@ -33,7 +33,6 @@ import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/material/styles'
 import { Button, CardActions, CardContent } from '@mui/material'
 import Link from 'next/link';
-import HelpNotificationCard from 'src/views/cards/HelpNotificationCard'
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -62,61 +61,53 @@ const NearByGyms = () => {
   const { providerClient, currentAccount, setCurrentAccount } = useAuth()
   const [accountConnected, setAccountConnected] = useState(false)
 
-  const [userSubs, setUserSubs] = useState(null);
+  const [nearbyGyms, setNearbyGyms] = useState(null);
 
-  async function GetAllUserSubscriptions(userAddr) {
+  async function GetAllGyms() {
     if (currentAccount) {
       //  Create Web3 instance
       const web3 = new Web3(providerClient);
-      const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
-      const subRes = await contract.methods.GetUserSubscriptions(userAddr).call();
+      const contract = new web3.eth.Contract(GymStore.abi, GYM_STORE_CONTRACT)
+      const subRes = await contract.methods.getAllStores().call();
       let subs = []
-      if (subRes.length == 0) {
-        setUserSubs([]);
-      }
       for (const r in subRes) {
         console.log("======= response is: ", subRes[r])
         subs.push({
-          tokenId: subRes[r]['tokenId'],
-          storeId: subRes[r]['storeId'],
-          name: subRes[r]['memberName'].toString(),
+          storeId: subRes[r]['tokenId'],
+          name: subRes[r]['name'].toString(),
           image: GetIpfsFileUrl(GetCidFromIpfsLink(subRes[r]['image'].toString())),
-          owner: subRes[r]['owner'].toString(),
-          invalidAfter: subRes[r]['invalidAfter'],
+          address: subRes[r]['storeAddr'].toString(),
+          owner: subRes[r]['owner'],
         })
       }
-      setUserSubs(subs);
-      console.log(" ========== contract response in state var: ", userSubs, subs);
+      setNearbyGyms(subs);
+      console.log(" ========== contract response in state var: ", nearbyGyms, subs);
     } else {
       console.log("User account not set!");
     }
   }
 
   useEffect(async () => {
-    console.log("current account on user-subscriptions page is: ", currentAccount)
+    console.log("current account on nearby-gyms page is: ", currentAccount)
     if (currentAccount) {
       setAccountConnected(true)
-      await GetAllUserSubscriptions(currentAccount);
+      await GetAllGyms();
     } else {
       setAccountConnected(false)
     }
   }, [currentAccount])
 
-  function navigateToNearbyStores() {
-    window.open("/nearby-gyms");
-  }
-
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          My Gym Subscriptions
+          Gyms Near me
         </Typography>
-        <Typography variant='body2'>Here is the list of your health subscriptions from various stores. Use these subscription NFTs to gain access to any of the 3FIT Health Clubs.</Typography>
+        <Typography variant='body2'>Use the following list to explore Gyms and Health Clubs near you. Buy their subscription NFTs and sign up for their membership using the Aurora Blockchain</Typography>
       </Grid>
-      {userSubs ? (<>
-        {userSubs.length > 0 ? (<>{userSubs.map(row => (
-          <Grid key={`${row.storeId}/${row.tokenId}`} item xs={12} sm={6} md={6} lg={12} sx={{ pr: 2, pb: 2, mt: 5 }}>
+      {nearbyGyms && nearbyGyms.length > 0 ? (<>
+        {nearbyGyms.map(row => (
+          <Grid key={row.name} item xs={12} sm={6} md={6} lg={12} sx={{ pr: 2, pb: 2, mt: 5 }}>
             <Card>
               <Grid container spacing={6}>
                 <StyledGrid item md={5} xs={12}>
@@ -138,16 +129,16 @@ const NearByGyms = () => {
                     <Typography variant='h3' sx={{ marginBottom: 2 }}>
                       {row.name}
                     </Typography>
-                    {/* <Typography variant='h5' sx={{ marginBottom: 2 }}>
-                      Store Number: {row.storeId}
-                    </Typography> */}
+                    <Typography variant='h5' sx={{ marginBottom: 2 }}>
+                      Address: {row.address}
+                    </Typography>
                   </CardContent>
                   <CardActions className='card-action-dense'>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                      {/* <Button>
+                      <Button>
                         <CartPlus fontSize='small' sx={{ marginRight: 2 }} />
-                        <Link href={`/ avail - subscriptions / ${row.storeId}`}>See Available Subscription NFTs</Link>
-                      </Button> */}
+                        <Link href={`/avail-subscriptions/${row.storeId}`}>See Available Subscription NFTs</Link>
+                      </Button>
                       <IconButton
                         id='long-button'
                         aria-label='share'
@@ -186,11 +177,7 @@ const NearByGyms = () => {
               </Grid>
             </Card>
           </Grid>
-        ))}</>) : (<>
-          <Grid item xs={12} sm={12} md={12}>
-            <HelpNotificationCard heading='No subscriptions available for your account' content='You do not have any subscriptions yet. Please navigate to one of the available health clubs and purchase a subscription to get access to loads of Health benefits!' clickButtonText='Go to Nearby Health Clubs' clickButton={navigateToNearbyStores} />
-          </Grid>
-        </>)}
+        ))}
 
         {/* <TableBody>
           {storeSubs.map(row => (

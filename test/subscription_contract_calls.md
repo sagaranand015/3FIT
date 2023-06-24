@@ -1,10 +1,10 @@
 ### GymSubscription Contract calls
 
-GymSubscription SC deployed to `0x13D6E226a77d8420878e0E04C514d1f3b702bBd0`
+GymSubscription SC deployed to `0x57E7994c36262036899504e61cECc4Af06715F52`
 
 #### Get GymSubscription Contract
 const gs = await ethers.getContractFactory("GymSubscription");
-const gymSub = await gs.attach("0x13D6E226a77d8420878e0E04C514d1f3b702bBd0");
+const gymSub = await gs.attach("0x57E7994c36262036899504e61cECc4Af06715F52");
 
 
 #### GymSubscription Contract function calls

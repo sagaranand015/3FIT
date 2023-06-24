@@ -28,19 +28,12 @@ const navigation = () => {
     {
       title: 'My Gyms',
       icon: Login,
-      path: '/my-gyms',
+      path: '/my-gyms'
     },
     {
       title: 'Nearby Gyms',
       icon: AccountPlusOutline,
-      path: '#',
-      openInNewTab: true
-    },
-    {
-      title: 'Subscriptions',
-      icon: AlertCircleOutline,
-      path: '#',
-      openInNewTab: true
+      path: '/nearby-gyms'
     },
     {
       sectionTitle: 'Help & Support'
