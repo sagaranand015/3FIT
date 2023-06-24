@@ -9,6 +9,10 @@ typechain-types
 cache
 artifacts
 
-frontend/node_modules
-frontend/.next
+frontend-admin/node_modules
+frontend-admin/.next
+
+frontend-user/node_modules
+frontend-user/.next
+
 
