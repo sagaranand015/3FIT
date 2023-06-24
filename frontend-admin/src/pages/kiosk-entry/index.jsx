@@ -30,8 +30,10 @@ import { addressHasNFT } from 'src/utils/checkNFT'
 import { useEffect, useState } from 'react'
 import { wcProvider } from 'src/configs/walletConnectProvider'
 
+import GymSubscription from '../../abis/GymSubscription.json';
+
 import Web3 from "web3";
-import { GYM_STORE_CONTRACT } from '../utils';
+import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT } from '../utils';
 
 const KioskEntry = () => {
   const { currentAccount, setCurrentAccount, disconnectAccount, adminMode } = useAuth()
@@ -43,6 +45,7 @@ const KioskEntry = () => {
   }
 
   const [providerClient, setProviderClient] = useState(null);
+  const [hasAccess, setHasAccess] = useState(false);
 
   /**
    * WalletConnect v1 Integration
@@ -84,17 +87,15 @@ const KioskEntry = () => {
   }
 
   async function CheckUserSubscription(userAddr) {
-    // if (userAddr) {
-    //   //  Create Web3 instance
-    //   const web3 = new Web3(providerClient);
-    //   console.log(" ========== web3Provider: ", web3);
-    //   const contract = new web3.eth.Contract(GymStore.abi, GYM_STORE_CONTRACT)
-    //   console.log(" ========== contract: ", contract);
-
-
-    // } else {
-    //   console.log("User account not set!");
-    // }
+    if (userAddr) {
+      const web3 = new Web3(providerClient);
+      const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
+      const subRes = await contract.methods.hasStoreSubscription(userAddr).call();
+      return subRes
+    } else {
+      console.log("User account not set!");
+    }
+    return false;
   }
 
   async function checkNFT() {
@@ -107,7 +108,10 @@ const KioskEntry = () => {
       setIsUser(true);
       console.log("===== Starting NFT check: ", userAccRes);
       // const hasNftRes = await addressHasNFT(userAccRes);
-      await CheckUserSubscription(userAccRes);
+      const res = await CheckUserSubscription(userAccRes);
+      if (res) {
+        setHasAccess(res);
+      }
     } else {
       console.log("======== disconnected!");
     }
@@ -117,6 +121,7 @@ const KioskEntry = () => {
   async function exitAccessGranted() {
     await disconnectUserWalletHandler();
     setIsUser(false);
+    setHasAccess(false);
   }
 
   return (
@@ -124,36 +129,23 @@ const KioskEntry = () => {
     <div>
       {userAccount ? (
         <div>
-          {setIsUser ? (
+          {hasAccess ? (
             <div>
               <Grid container spacing={6}>
                 <Grid item xs={12} sm={12} md={12}>
-                  <HelpNotificationCard heading='Access Granted or not!' content='Access has been granted or not' clickButtonText='EXIT' clickButton={exitAccessGranted} />
+                  <HelpNotificationCard heading='Access Granted' content='Access has been granted. Please proceed' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
                 </Grid>
               </Grid>
             </div>
           ) :
             (
-              <div><Grid container spacing={6}>
-                <Grid item xs={12} sx={{ paddingBottom: 4 }}>
-                  <Typography variant='h5'>Welcome to 3Fit</Typography>
+              <div>
+                <Grid container spacing={6}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <HelpNotificationCard heading='Access Denied' content='Your Access has been denied. Please make sure you have the Gym Subscription NFT and that you are using the correct Wallet Account' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <HelpNotificationCard heading='Start your Gym Entry Kiosk' content='Allow Customers to enter your gym using their pre-issued NFTs. Just let them scan the OR code to authorize their access.' clickButtonText='START ENTRY KIOSK' clickButton={checkNFT} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <CardImgTop />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <CardImgTop2 />
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <CardImgTop3 />
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                  <HelpNotificationCard heading='Contact Us' content='Connect with our Development Team to know more about the Web3 enabled Subscription Engine and the roadmap for next set of features' clickButtonText='Connect on LinkedIn' clickButton={NavigateToLinkedIn} />
-                </Grid>
-              </Grid></div>
+              </div>
             )
           }
         </div>
