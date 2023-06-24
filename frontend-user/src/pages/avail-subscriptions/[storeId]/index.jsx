@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/material/styles'
 import { Button, CardActions, CardContent } from '@mui/material'
-import MembershipTypesJson from '../../../data/MembershipTypes.json';
+import MembershipTypesJson from '../../data/memberhipTypes.json';
 import { GYM_SUBSCRIPTION_CONTRACT } from 'src/pages/utils'
 import Web3 from 'web3'
 
