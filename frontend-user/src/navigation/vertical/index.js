@@ -13,34 +13,25 @@ import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 const navigation = () => {
   return [
     {
-      title: 'Entry Kiosk',
-      icon: HomeOutline,
-      path: '/kiosk-entry'
-    },
-    {
       title: 'Dashboard',
       icon: HomeOutline,
       path: '/'
     },
     {
-      sectionTitle: 'Gym Configuration'
-    },
-    {
-      title: 'My Gyms',
-      icon: Login,
-      path: '/my-gyms',
+      sectionTitle: 'Explore Gyms'
     },
     {
       title: 'Nearby Gyms',
       icon: AccountPlusOutline,
-      path: '#',
-      openInNewTab: true
+      path: '/nearby-gyms'
     },
     {
-      title: 'Subscriptions',
+      sectionTitle: 'Subscriptions Mgmt'
+    },
+    {
+      title: 'My Subscriptions',
       icon: AlertCircleOutline,
-      path: '#',
-      openInNewTab: true
+      path: '/my-subscriptions',
     },
     {
       sectionTitle: 'Help & Support'

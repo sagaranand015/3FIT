@@ -1,6 +1,6 @@
 const themeConfig = {
   // ** Layout Configs
-  templateName: '3FIT - Admin' /* App Name */,
+  templateName: '3FIT' /* App Name */,
   mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
   // ** Routing Configs

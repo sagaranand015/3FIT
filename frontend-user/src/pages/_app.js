@@ -54,12 +54,12 @@ const App = props => {
     <AuthProvider>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>{`${themeConfig.templateName} - Admin Console for 3FIT Gym Engine`}</title>
+          <title>{`${themeConfig.templateName} - Welcome to 3FIT Health Platform`}</title>
           <meta
             name='description'
-            content={`${themeConfig.templateName} – Admin Console for versatile 3FIT Gym Engine for configuring your gyms and their subscriptions`}
+            content={`${themeConfig.templateName} – 3FIT Health Platform for exploring nearby blockchain based Gyms and buying/selling their subscriptions`}
           />
-          <meta name='keywords' content='3FIT Admin Web3 Gym Subscrition Engine' />
+          <meta name='keywords' content='3FIT Web3 Gym Health Platform Subscrition Engine' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
 

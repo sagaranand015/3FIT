@@ -31,7 +31,7 @@ async function main() {
   /**
    * Deploying GymSubscription SC
    */
-  const gymSub = await hre.ethers.deployContract("GymSubscription", ['0xe1751468a2eE67B29A6fFfe007C1D544b4055481']);
+  const gymSub = await hre.ethers.deployContract("GymSubscription", ['0xf8228E24F6c6F53cB22af72192114bB58022918B']);
   const subRes = await gymSub.waitForDeployment();
   console.log("===== gymSubscription Res: ", subRes);
   // console.log(`Deployed gymStore SC at: ${res}`);

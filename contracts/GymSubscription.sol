@@ -72,15 +72,27 @@ contract GymSubscription is ERC721URIStorage {
             }
         }
         return subs;
-        // return (
-        //     subscriptions[_storeId].tokenId,
-        //     subscriptions[_storeId].storeId,
-        //     subscriptions[_storeId].memberName,
-        //     subscriptions[_storeId].image,
-        //     subscriptions[_storeId].ipfsHash,
-        //     subscriptions[_storeId].owner,
-        //     subscriptions[_storeId].invalidAfter
-        // );
+    }
+
+    function GetUserSubscriptions(
+        address userAddr
+    ) public view returns (storeSubscription[] memory) {
+        uint256 j = 0;
+        for (uint256 i = 0; i < subscriptions.length; i++) {
+            if (subscriptions[i].owner == userAddr) {
+                j = j + 1;
+            }
+        }
+        storeSubscription[] memory subs = new storeSubscription[](j);
+        uint256 k = 0;
+        for (uint256 i = 0; i < subscriptions.length; i++) {
+            if (subscriptions[i].owner == userAddr) {
+                storeSubscription storage s = subscriptions[i];
+                subs[k] = s;
+                k = k + 1;
+            }
+        }
+        return subs;
     }
 
     function makePaymentToStore(uint256 val) public {

@@ -88,6 +88,15 @@ contract GymStore is ERC721URIStorage {
         );
     }
 
+    function getAllStores() public view returns (storeDetails[] memory) {
+        storeDetails[] memory strs = new storeDetails[](stores.length);
+        for (uint256 i = 0; i < stores.length; i++) {
+            storeDetails storage s = stores[i];
+            strs[i] = s;
+        }
+        return strs;
+    }
+
     function getOwnerStore(
         address ownerAddress
     )
