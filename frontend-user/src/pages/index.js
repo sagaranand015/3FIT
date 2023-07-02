@@ -2,7 +2,7 @@
 import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import HomePage from "./homepage"
-import NearByGyms from './nearby-gyms'
+import NearByGyms from './near-gyms'
 
 const Dashboard = () => {
 

@@ -2,14 +2,6 @@
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
-import { useRouter } from 'next/router'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
 
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -178,32 +170,6 @@ const NearByGyms = () => {
             </Card>
           </Grid>
         ))}
-
-        {/* <TableBody>
-          {storeSubs.map(row => (
-            <TableRow
-              key={row.name}
-              sx={{
-                '&:last-of-type td, &:last-of-type th': {
-                  border: 0
-                }
-              }}
-            >
-              <TableCell component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell align='right'>{GetDateInCurrentTimezone(row.invalidAfter)}</TableCell>
-              <TableCell align='right'>{shortenAddress(row.owner)}</TableCell>
-              {isSubscriptionValid(row.invalidAfter)
-                ? (<TableCell align='right'>
-                  <CheckCircleOutlineOutlinedIcon></CheckCircleOutlineOutlinedIcon>
-                </TableCell>)
-                : (<TableCell align='right'>
-                  <CancelOutlinedIcon></CancelOutlinedIcon>
-                </TableCell>)}
-            </TableRow>
-          ))}
-        </TableBody> */}
       </>) : (<>
         <LoadingButton loading={true}>Loading, Please wait...</LoadingButton>
       </>)}

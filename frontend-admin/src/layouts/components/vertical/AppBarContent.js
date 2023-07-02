@@ -22,7 +22,7 @@ const shortenAddress = (address) => {
 }
 
 const AppBarContent = props => {
-  const { currentAccount, setCurrentAccount, disconnectAccount, adminMode, setUserAccount, disconnectUserAccount } = useAuth()
+  const { providerClient, currentAccount, setCurrentAccount, disconnectAccount } = useAuth()
 
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props

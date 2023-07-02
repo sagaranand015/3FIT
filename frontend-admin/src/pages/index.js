@@ -29,7 +29,6 @@ import { useAuth } from 'src/configs/authProvider'
 import { useEffect, useState } from 'react'
 import { Alert, Button } from '@mui/material'
 import HomePage from "./homepage";
-import KioskEntry from './kiosk-entry'
 import Web3 from 'web3'
 import { GYM_STORE_CONTRACT } from '../utils/utils'
 import MyGyms from './my-gyms';

@@ -11,18 +11,21 @@ import { useAuth } from 'src/configs/authProvider'
 import HelpNotificationCard from 'src/views/cards/HelpNotificationCard'
 import CardImgTop2 from 'src/views/cards/CardImgTop2'
 import CardImgTop3 from 'src/views/cards/CardImgTop3'
-import { WindowOpen } from 'mdi-material-ui'
-import { addressHasNFT } from 'src/utils/checkNFT'
+// import { WindowOpen } from 'mdi-material-ui'
+// import { addressHasNFT } from 'src/utils/checkNFT'
 import { useEffect, useState } from 'react'
-import { wcProvider } from 'src/configs/walletConnectProvider'
+// import { wcProvider } from 'src/configs/walletConnectProvider'
 
 import GymSubscription from '../../abis/GymSubscription.json';
 
 import Web3 from "web3";
 import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT } from '../../utils/utils';
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
+// import { EthereumProvider } from '@walletconnect/ethereum-provider'
 
 const KioskEntry = () => {
-  const { currentAccount, setCurrentAccount, disconnectAccount, adminMode } = useAuth()
+  const [currentAccount, setCurrentAccount] = useState(null);
+  // const { providerClient, currentAccount, setCurrentAccount, disconnectAccount } = useAuth()
   const [isUser, setIsUser] = useState(false);
   const [userAccount, setUserAccount] = useState(null);
 
@@ -33,44 +36,109 @@ const KioskEntry = () => {
   const [providerClient, setProviderClient] = useState(null);
   const [hasAccess, setHasAccess] = useState(false);
 
-  /**
-   * WalletConnect v1 Integration
-   */
-  function onInitializeProviderClient() {
-    setProviderClient(wcProvider);
+  // /**
+  //  * WalletConnect v1 Integration
+  //  */
+  // function onInitializeProviderClient() {
+  //   setProviderClient(wcProvider);
+  // }
+  // useEffect(() => {
+  //   onInitializeProviderClient();
+  // }, [userAccount])
+  // const connectUserWalletHandler = async () => {
+  //   if (providerClient) {
+  //     if (providerClient.connected) {
+  //       console.log("======== wallet connected... need to kill first");
+  //       await providerClient.connector.killSession();
+  //     }
+  //     console.log("======== starting?")
+  //     var res = await providerClient.enable()
+  //     console.log("======== now?", res)
+  //     if (res) {
+  //       setUserAccount(res[0])
+  //     }
+  //     return res[0];
+  //   } else {
+  //     alert("Could not initialize WalletConnect properly, please refresh the page!");
+  //   }
+  //   return null;
+  // }
+  // const disconnectUserWalletHandler = async () => {
+  //   if (providerClient) {
+  //     await providerClient.disconnect();
+  //     setUserAccount(null);
+  //   } else {
+  //     alert("Could not initialize WalletConnect properly, please refresh the page!");
+  //   }
+  // }
+
+  // /**
+  //  * WalletConnect v2 Integration
+  //  */
+  const disconnectUserWalletHandler = async () => {
+    if (providerClient) {
+      // await providerClient.disconnect();
+      if (providerClient.connected) {
+        await providerClient.disconnect();
+        setCurrentAccount(null);
+        setHasAccess(false);
+      }
+      console.log("disconnecting shit!", currentAccount, hasAccess);
+    } else {
+      alert("Could not initialize WalletConnect properly, please refresh the page!");
+    }
   }
 
-  useEffect(() => {
-    onInitializeProviderClient();
-  }, [userAccount])
+  const checkWalletIsConnected = () => {
+    return currentAccount == null
+  }
 
+  useEffect(async () => {
+    await onInitializeProviderClient();
+  }, []);
+
+  // 2. Initialize sign client
+  async function onInitializeProviderClient() {
+    const client = await EthereumProvider.init({
+      projectId: "ba066cfb9464b10a36557a817a3b9f1d",
+      showQrModal: true,
+      // qrModalOptions: {
+      //     themeMode: "dark", desktopWallets: ["metamask"]
+      // },
+      chains: [1313161555],
+      version: 2,
+      methods: ["eth_sendTransaction", "personal_sign"],
+      events: ["chainChanged", "accountsChanged"],
+    })
+    console.log("======= client ok? ============", client);
+    setProviderClient(client);
+    return client;
+  }
+
+  // 3. Enable / connect with provider, will open web3modal
   const connectUserWalletHandler = async () => {
     if (providerClient) {
-      if (providerClient.connected) {
-        console.log("======== wallet connected... need to kill first");
-        await providerClient.connector.killSession();
+      await providerClient.connect();
+      const result = await providerClient.request({ method: 'eth_requestAccounts' })
+      if (result) {
+        setCurrentAccount(result[0])
+        return result[0];
       }
-      console.log("======== starting?")
-      var res = await providerClient.enable()
-      console.log("======== now?", res)
-      if (res) {
-        setUserAccount(res[0])
-      }
-      return res[0];
     } else {
       alert("Could not initialize WalletConnect properly, please refresh the page!");
     }
     return null;
   }
 
-  const disconnectUserWalletHandler = async () => {
-    if (providerClient) {
-      await providerClient.disconnect();
-      setUserAccount(null);
-    } else {
-      alert("Could not initialize WalletConnect properly, please refresh the page!");
-    }
-  }
+  // useEffect(async () => {
+  //   await onInitializeProviderClient();
+  //   // await onConnect();
+  // }, []);
+
+  // useEffect(async () => {
+  //   // await onInitializeProviderClient();
+  //   // await onConnect();
+  // }, [userAccount, hasAccess]);
 
   async function CheckUserSubscription(userAddr) {
     if (userAddr) {
@@ -92,10 +160,12 @@ const KioskEntry = () => {
     // await setUserAccount();
     if (userAccRes) {
       setIsUser(true);
+      setUserAccount(userAccRes);
       console.log("===== Starting NFT check: ", userAccRes);
       // const hasNftRes = await addressHasNFT(userAccRes);
       const res = await CheckUserSubscription(userAccRes);
       if (res) {
+        console.log("hasStoreSubscription check in if condition: ", res);
         setHasAccess(res);
       }
     } else {
@@ -108,12 +178,15 @@ const KioskEntry = () => {
     await disconnectUserWalletHandler();
     setIsUser(false);
     setHasAccess(false);
+    setCurrentAccount(null);
+    console.log("== exit state is: ", currentAccount, hasAccess)
+    // setHasAccess(false);
   }
 
   return (
 
     <div>
-      {userAccount ? (
+      {currentAccount ? (
         <div>
           {hasAccess ? (
             <div>

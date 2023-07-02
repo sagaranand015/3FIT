@@ -23,7 +23,7 @@ const navigation = () => {
     {
       title: 'Nearby Gyms',
       icon: AccountPlusOutline,
-      path: '/nearby-gyms'
+      path: '/near-gyms'
     },
     {
       sectionTitle: 'Subscriptions Mgmt'
