@@ -53,26 +53,31 @@ function AuthProvider(props) {
 
     // 2. Initialize sign client
     async function onInitializeProviderClient() {
-        const client = await EthereumProvider.init({
-            projectId: "ba066cfb9464b10a36557a817a3b9f1d",
-            showQrModal: true,
-            // qrModalOptions: {
-            //     themeMode: "dark", desktopWallets: ["metamask"]
-            // },
-            chains: [1313161555],
-            version: 2,
-            methods: ["eth_sendTransaction", "personal_sign"],
-            events: ["chainChanged", "accountsChanged"],
-        })
-        console.log("======= client ok??????????????", client);
-        setProviderClient(client);
+        if (providerClient == null) {
+            const client = await EthereumProvider.init({
+                projectId: "ba066cfb9464b10a36557a817a3b9f1d",
+                showQrModal: true,
+                // qrModalOptions: {
+                //     themeMode: "dark", desktopWallets: ["metamask"]
+                // },
+                chains: [1313161555],
+                version: 2,
+                methods: ["eth_sendTransaction", "personal_sign"],
+                events: ["chainChanged", "accountsChanged"],
+            })
+            console.log("======= client ok??????????????", client);
+            setProviderClient(client);
+            return client;
+        }
+        return providerClient;
     }
 
     // 3. Enable / connect with provider, will open web3modal
     const connectWalletHandler = async () => {
-        if (providerClient) {
-            await providerClient.connect();
-            const result = await providerClient.request({ method: 'eth_requestAccounts' })
+        const p = await onInitializeProviderClient();
+        if (p) {
+            await p.connect();
+            const result = await p.request({ method: 'eth_requestAccounts' })
             if (result) {
                 setCurrentAccount(result[0])
             }
