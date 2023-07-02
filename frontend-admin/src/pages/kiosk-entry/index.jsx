@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react'
 import GymSubscription from '../../abis/GymSubscription.json';
 
 import Web3 from "web3";
-import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT } from '../../utils/utils';
+import { GYM_STORE_CONTRACT, GYM_SUBSCRIPTION_CONTRACT, shortenAddress } from '../../utils/utils';
 import { EthereumProvider } from '@walletconnect/ethereum-provider'
 // import { EthereumProvider } from '@walletconnect/ethereum-provider'
 
@@ -192,7 +192,7 @@ const KioskEntry = () => {
             <div>
               <Grid container spacing={6}>
                 <Grid item xs={12} sm={12} md={12}>
-                  <HelpNotificationCard heading='Access Granted' content='Access has been granted. Please proceed' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
+                  <HelpNotificationCard heading={`Access Granted for ${shortenAddress(currentAccount)}`} content='Access has been granted. Please proceed' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
                 </Grid>
               </Grid>
             </div>
@@ -201,7 +201,7 @@ const KioskEntry = () => {
               <div>
                 <Grid container spacing={6}>
                   <Grid item xs={12} sm={12} md={12}>
-                    <HelpNotificationCard heading='Access Denied' content='Your Access has been denied. Please make sure you have the Gym Subscription NFT and that you are using the correct Wallet Account' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
+                    <HelpNotificationCard heading={`Access Denied for ${shortenAddress(currentAccount)}`} content='Your Access has been denied. Please make sure you have the Gym Subscription NFT and that you are using the correct Wallet Account' clickButtonText='EXIT KIOSK' clickButton={exitAccessGranted} />
                   </Grid>
                 </Grid>
               </div>
