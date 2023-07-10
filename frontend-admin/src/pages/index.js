@@ -49,13 +49,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      {accountConnected ? (
+      {currentAccount ? (
         <div>
           <MyGyms></MyGyms>
         </div>
       ) :
         (
           <div>
+
             <HomePage></HomePage>
           </div>
         )

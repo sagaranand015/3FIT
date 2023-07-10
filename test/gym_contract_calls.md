@@ -16,7 +16,7 @@ const storeCreatedRes = await gymStore.createStore('Zero Gravity Health Club', '
 const storeCreatedRes = await gymStore.createStore('Divine Fitness Health Club', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4', 'Mumbai, India', 'ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4')
 ```
 
-2. `const ownerStoreRes = await gymStore.getOwnerStore('0xf4267F20B463421D2cF3db534491b7920F79Ac4F')`
+2. `const ownerStoreRes = await gymStore.getOwnerStore('0x9A9B3fBb7c83D82E7cF696d6F2ecCa35Ba00C356')`
 
 2. `const storeNumRes = await gymStore.getStoreNumber()`
 
