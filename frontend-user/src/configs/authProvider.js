@@ -2,7 +2,7 @@
 import React from 'react'
 import { useContext } from 'react';
 import { useState, useEffect } from 'react';
-import { wcProvider } from "./walletConnectProvider";
+// import { wcProvider } from "./walletConnectProvider";
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 const AuthContext = React.createContext();

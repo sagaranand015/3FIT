@@ -34,3 +34,9 @@ export function GetDateInCurrentTimezone(validTillTime) {
     // return d.toString();
     return d.getFullYear().toString() + "-" + (d.getMonth() + 1).toString() + "-" + d.getDate().toString();
 }
+
+export function GetSubscriptionEndDate(noDays) {
+    var d = new Date(Date.now());
+    d.setDate(d.getDate() + noDays)
+    return d.getTime();
+}

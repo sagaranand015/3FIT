@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { styled } from '@mui/material/styles'
 import { Button, CardActions, CardContent } from '@mui/material';
-import { GYM_SUBSCRIPTION_CONTRACT } from 'src/utils/utils'
+import { GYM_SUBSCRIPTION_CONTRACT, GetSubscriptionEndDate } from 'src/utils/utils'
 import Web3 from 'web3'
 
 const MembershipTypesJson = [
@@ -37,7 +37,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "1 Month Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1690095132
+        "invalidAfter": 1690095132,
+        "validForDays": 30
       },
       {
         "name": "6 Months Membership NFT",
@@ -46,7 +47,8 @@ const MembershipTypesJson = [
         "price": "0.0003 ETH",
         "description": "6 Months Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1703409965
+        "invalidAfter": 1703409965,
+        "validForDays": 180
       },
       {
         "name": "1 Year Membership NFT",
@@ -55,7 +57,8 @@ const MembershipTypesJson = [
         "price": "0.0005 ETH",
         "description": "1 Year Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1719082288
+        "invalidAfter": 1719082288,
+        "validForDays": 365
       },
       {
         "name": "Lifetime Membership NFT",
@@ -64,7 +67,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "Lifetime Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1924334765
+        "invalidAfter": 1924334765,
+        "validForDays": 3650
       }
     ]
   },
@@ -78,7 +82,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "1 Month Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1690095132
+        "invalidAfter": 1690095132,
+        "validForDays": 30
       },
       {
         "name": "6 Months Membership NFT",
@@ -87,7 +92,8 @@ const MembershipTypesJson = [
         "price": "0.0003 ETH",
         "description": "6 Months Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1703409965
+        "invalidAfter": 1703409965,
+        "validForDays": 180
       },
       {
         "name": "1 Year Membership NFT",
@@ -96,7 +102,8 @@ const MembershipTypesJson = [
         "price": "0.0005 ETH",
         "description": "1 Year Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1719082288
+        "invalidAfter": 1719082288,
+        "validForDays": 365
       },
       {
         "name": "Lifetime Membership NFT",
@@ -105,7 +112,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "Lifetime Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1924334765
+        "invalidAfter": 1924334765,
+        "validForDays": 3650
       }
     ]
   },
@@ -119,7 +127,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "1 Month Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1690095132
+        "invalidAfter": 1690095132,
+        "validForDays": 30
       },
       {
         "name": "6 Months Membership NFT",
@@ -128,7 +137,8 @@ const MembershipTypesJson = [
         "price": "0.0003 ETH",
         "description": "6 Months Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1703409965
+        "invalidAfter": 1703409965,
+        "validForDays": 180
       },
       {
         "name": "1 Year Membership NFT",
@@ -137,7 +147,8 @@ const MembershipTypesJson = [
         "price": "0.0005 ETH",
         "description": "1 Year Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1719082288
+        "invalidAfter": 1719082288,
+        "validForDays": 365
       },
       {
         "name": "Lifetime Membership NFT",
@@ -146,7 +157,8 @@ const MembershipTypesJson = [
         "price": "0.0001 ETH",
         "description": "Lifetime Access",
         "image": "/images/apple-touch-icon.png",
-        "invalidAfter": 1924334765
+        "invalidAfter": 1924334765,
+        "validForDays": 3650
       }
     ]
   }
@@ -204,7 +216,8 @@ const MembershipTypes = () => {
         const web3 = new Web3(providerClient);
         const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
         console.log("========= mlShip: ", mbShip);
-        const subRes = await contract.methods.createSubscription(stId, membershipName, "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", currentAccount, mbShip.invalidAfter).send({ from: currentAccount });
+        const subEndDate = GetSubscriptionEndDate(mbShip.validForDays)
+        const subRes = await contract.methods.createSubscription(stId, membershipName, "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", currentAccount, subEndDate).send({ from: currentAccount });
         console.log("========= response of purchase: ", subRes);
         alert("Transaction successful. Your subscription NFT should now be available on the explorer!");
         setTxInProgress(false);

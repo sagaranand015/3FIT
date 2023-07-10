@@ -82,7 +82,7 @@ const NearByGyms = () => {
           name: subRes[r]['memberName'].toString(),
           image: GetIpfsFileUrl(GetCidFromIpfsLink(subRes[r]['image'].toString())),
           owner: subRes[r]['owner'].toString(),
-          invalidAfter: parseInt(subRes[r]['invalidAfter']),
+          invalidAfter: parseInt(subRes[r]['invalidAfter']) / 1000,
         })
       }
       setUserSubs(subs);

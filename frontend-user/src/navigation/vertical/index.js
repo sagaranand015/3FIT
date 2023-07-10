@@ -34,6 +34,11 @@ const navigation = () => {
       path: '/user-subscriptions',
     },
     {
+      title: 'Trade Subscriptions',
+      icon: AlertCircleOutline,
+      path: '#',
+    },
+    {
       sectionTitle: 'Help & Support'
     },
     {
