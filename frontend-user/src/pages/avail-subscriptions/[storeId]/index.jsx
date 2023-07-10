@@ -196,34 +196,23 @@ const MembershipTypes = () => {
 
   async function PurchaseMembership(mbShip) {
     if (currentAccount && stId) {
-      //  Create Web3 instance
-      const web3 = new Web3(providerClient);
-      const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
-      console.log("========= mlShip: ", mbShip);
-      const subRes = await contract.methods.createSubscription(stId, "Demo User Subscription NFT for Gym", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", currentAccount, mbShip.invalidAfter).send({ from: currentAccount });
-      setTxInProgress(true);
-      console.log("========= response of purchase: ", subRes);
-      alert("Transaction successful. Your subscription NFT should now be available on the explorer!");
-      setTxInProgress(false);
-      // let subs = []
-      // if (subRes.length == 0) {
-      //   setUserSubs([]);
-      // }
-      // for (const r in subRes) {
-      //   console.log("======= response is: ", subRes[r])
-      //   subs.push({
-      //     tokenId: subRes[r]['tokenId'],
-      //     storeId: subRes[r]['storeId'],
-      //     name: subRes[r]['memberName'].toString(),
-      //     image: GetIpfsFileUrl(GetCidFromIpfsLink(subRes[r]['image'].toString())),
-      //     owner: subRes[r]['owner'].toString(),
-      //     invalidAfter: subRes[r]['invalidAfter'],
-      //   })
-      // }
-      // setUserSubs(subs);
-      // console.log(" ========== contract response in state var: ", userSubs, subs);
+
+      const membershipName = prompt("Please enter your Subscription NFT Username/Name");
+      if (membershipName) {
+        //  Create Web3 instance
+        setTxInProgress(true);
+        const web3 = new Web3(providerClient);
+        const contract = new web3.eth.Contract(GymSubscription.abi, GYM_SUBSCRIPTION_CONTRACT)
+        console.log("========= mlShip: ", mbShip);
+        const subRes = await contract.methods.createSubscription(stId, membershipName, "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", "ipfs://bafkreicbbj3cxhq75hwoh37livm7fdgh7z4hycbunsuqkjkkjwegon27y4", currentAccount, mbShip.invalidAfter).send({ from: currentAccount });
+        console.log("========= response of purchase: ", subRes);
+        alert("Transaction successful. Your subscription NFT should now be available on the explorer!");
+        setTxInProgress(false);
+      } else {
+        console.log("User account or StoreId not set while purchase subscription!");
+      }
     } else {
-      console.log("User account or StoreId not set while purchase subscription!");
+      console.log("No Membership name added. Please try again");
     }
 
   }
