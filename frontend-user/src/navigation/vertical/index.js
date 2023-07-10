@@ -21,7 +21,7 @@ const navigation = () => {
       sectionTitle: 'Explore Gyms'
     },
     {
-      title: 'Nearby Gyms',
+      title: 'Explore Clubs',
       icon: AccountPlusOutline,
       path: '/near-gyms'
     },
