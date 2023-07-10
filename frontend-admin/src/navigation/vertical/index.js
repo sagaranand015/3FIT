@@ -31,7 +31,7 @@ const navigation = () => {
       path: '/my-gyms'
     },
     {
-      title: 'Nearby Gyms',
+      title: 'Explore Gyms',
       icon: AccountPlusOutline,
       path: '/nearby-gyms'
     },
